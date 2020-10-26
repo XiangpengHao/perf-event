@@ -635,6 +635,8 @@ impl Group {
         attrs.type_ = sys::bindings::perf_type_id_PERF_TYPE_SOFTWARE;
         attrs.config = sys::bindings::perf_sw_ids_PERF_COUNT_SW_DUMMY as u64;
         attrs.set_disabled(1);
+        attrs.set_inherit(1);
+        attrs.set_inherit_stat(1);
         attrs.set_exclude_kernel(1);
         attrs.set_exclude_hv(1);
 
