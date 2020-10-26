@@ -635,8 +635,6 @@ impl Group {
         attrs.type_ = sys::bindings::perf_type_id_PERF_TYPE_SOFTWARE;
         attrs.config = sys::bindings::perf_sw_ids_PERF_COUNT_SW_DUMMY as u64;
         attrs.set_disabled(1);
-        attrs.set_inherit(1);
-        attrs.set_inherit_stat(1);
         attrs.set_exclude_kernel(1);
         attrs.set_exclude_hv(1);
 
@@ -646,7 +644,7 @@ impl Group {
 
         let file = unsafe {
             File::from_raw_fd(check_raw_syscall(|| {
-                sys::perf_event_open(&mut attrs, 0, -1, -1, 0)
+                sys::perf_event_open(&mut attrs, std::process::id() as i32, -1, -1, 0)
             })?)
         };
 
